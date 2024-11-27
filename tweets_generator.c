@@ -18,20 +18,18 @@ int main(int argc, char *argv[]) {
     // Parse arguments
     unsigned int seed = (unsigned int) strtol(argv[1], NULL, 10);
     int tweets_count = (int) strtol(argv[2], NULL, 10);
-    char *corpus_path = argv[3];
     int words_to_read = -1;
 
     if (argc == 5) {
         words_to_read = (int) strtol(argv[4], NULL, 10);
     }
 
-    // Set random seed
-    srand(seed);
+    srand(seed); // Set random seed
 
     // Open input file
-    FILE *fp = fopen(corpus_path, "r");
+    FILE *fp = fopen(argv[3], "r");
     if (fp == NULL) {
-        fprintf(stdout, "Error: Cannot open file %s\n", corpus_path);
+        fprintf(stdout, "Error: Cannot open file %s\n", argv[3]);
         return EXIT_FAILURE;
     }
 
@@ -42,14 +40,13 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    // Initialize database
     chain->database = malloc(sizeof(LinkedList));
     if (chain->database == NULL) {
         free(chain);
         fclose(fp);
         return EXIT_FAILURE;
     }
-
-    // Initialize database
     chain->database->first = NULL;
     chain->database->last = NULL;
     chain->database->size = 0;
@@ -59,12 +56,10 @@ int main(int argc, char *argv[]) {
     int word_counter = 0;
     Node *prev_node = NULL;
 
-    while (fgets(line, sizeof(line), fp) != NULL &&
-           (words_to_read == -1 || word_counter < words_to_read)) {
+    while (fgets(line, sizeof(line), fp) != NULL && (words_to_read == -1 || word_counter < words_to_read)) {
         char *word = strtok(line, DELIMITERS);
 
-        while (word != NULL &&
-               (words_to_read == -1 || word_counter < words_to_read)) {
+        while (word != NULL && (words_to_read == -1 || word_counter < words_to_read)) {
             Node *current_node = add_to_database(chain, word);
             if (current_node == NULL) {
                 free_database(&chain);

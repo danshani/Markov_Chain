@@ -27,6 +27,7 @@ typedef struct MarkovNodeFrequency{
     // any other fields you need
 } MarkovNodeFrequency;
 
+void free_frequency_list(MarkovNode *node);
 /**
     * Check if the given string ends with a period.
     * @param str the string to check
