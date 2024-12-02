@@ -2,10 +2,10 @@
 #define MARKOV_CHAIN_H
 
 #include "linked_list.h"
-#include <stdio.h>  // For printf()
-#include <stdlib.h> // For malloc()
-#include <stdbool.h> // for bool
-#include "string.h" // For strcmp()
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "string.h"
 
 #define ALLOCATION_ERROR_MASSAGE "Allocation failure: Failed to allocate"\
             "new memory\n"

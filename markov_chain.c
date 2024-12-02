@@ -43,9 +43,13 @@ Node* add_to_database(MarkovChain *markov_chain, char *data_ptr) {
     }
 
     // Copy the data
-    new_markov_node->data = strdup(data_ptr);
-    if (new_markov_node->data == NULL) {
+    new_markov_node->data = malloc(strlen(data_ptr) + 1);
+    if (new_markov_node->data) {
+        strcpy(new_markov_node->data, data_ptr);
+    }
+    if (!new_markov_node->data ) {
         free(new_markov_node);
+        printf(ALLOCATION_ERROR_MASSAGE);
         return NULL;
     }
 
@@ -139,7 +143,6 @@ MarkovNode* get_first_random_node(MarkovChain *markov_chain) {
     }
     // Check if the node ends with period
     while (ends_with_period(current_node->data->data));
-
     return current_node->data;
 }
 
